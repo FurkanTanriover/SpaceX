@@ -1,79 +1,52 @@
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Layout from "../components/Layout";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import RecentLaunchCard from "../components/RecentLaunchCard";
 import UpcomingEventCard from "../components/UpcomingEventCard";
-import RecentLaunchCard from "../components/RecenLaunchCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch, useSelector } from "react-redux";
+import { getUpcomingEvents } from "./../redux/action";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const [upcomingEvents, recentLaunch] = useSelector((state: any) => [state.reducer.upcomingEvents, state.reducer.recentLaunch]);
+  useEffect(() => {
+    getUpcomingEvents(dispatch);
+  }, [dispatch, upcomingEvents, recentLaunch]);
+
+  console.log("xy", upcomingEvents);
+  console.log("dfg", recentLaunch);
   return (
     <Layout>
       {/* upcoming events */}
       <View style={styles.upcomingEventsContainer}>
         <Text className="text-2xl font-normal text-white flex mb-4  justify-start">Upcoming Events</Text>
         <ScrollView contentContainerStyle={{ columnGap: 14 }} showsHorizontalScrollIndicator={false} horizontal>
-          {
+          {upcomingEvents.map((event: any) => (
             <UpcomingEventCard
-              backgroundImg="https://picsum.photos/200/300"
-              eventName="CRS-22"
-              eventDate="June 12,23"
-              eventTime="09:10PM"
+              key={event.id}
+              backgroundImg={event.image}
+              eventName={event.title}
+              eventDate={event.date}
+              eventTime={event.time}
             />
-          }
-          {
-            <UpcomingEventCard
-              backgroundImg="https://picsum.photos/200/300"
-              eventName="CRS-22"
-              eventDate="June 12,23"
-              eventTime="09:10PM"
-            />
-          }
-          {
-            <UpcomingEventCard
-              backgroundImg="https://picsum.photos/200/300"
-              eventName="CRS-22"
-              eventDate="June 12,23"
-              eventTime="09:10PM"
-            />
-          }
-          {
-            <UpcomingEventCard
-              backgroundImg="https://picsum.photos/200/300"
-              eventName="CRS-22"
-              eventDate="June 12,23"
-              eventTime="09:10PM"
-            />
-          }
+          ))}
         </ScrollView>
       </View>
       {/* recent launches */}
       <View style={styles.recentLaunchesContainer}>
         <Text className="text-2xl font-normal text-white flex mb-4  justify-start">Recent Launch</Text>
         <ScrollView contentContainerStyle={{ rowGap: 14 }}>
-          <RecentLaunchCard
-            title="Starlink Mission"
-            description="first orbital Class Rocket Capable Of Reflight"
-            date="Jun 21, 2023"
-            imageURL="https://picsum.photos/200/300"
-          />
-          <RecentLaunchCard
-            title="Starlink Mission"
-            description="first orbital Class Rocket Capable Of Reflight"
-            date="Jun 21, 2023"
-            imageURL="https://picsum.photos/200/300"
-          />
-          <RecentLaunchCard
-            title="Starlink Mission"
-            description="first orbital Class Rocket Capable Of Reflight"
-            date="Jun 21, 2023"
-            imageURL="https://picsum.photos/200/300"
-          />
-          <RecentLaunchCard
-            title="Starlink Mission"
-            description="first orbital Class Rocket Capable Of Reflight"
-            date="Jun 21, 2023"
-            imageURL="https://picsum.photos/200/300"
-          />
+          {recentLaunch.map((launch: any) => (
+            <RecentLaunchCard
+              key={launch.id}
+              title={launch.title}
+              description={launch.description}
+              date={launch.date}
+              imageURL={launch.image}
+            />
+          ))}
         </ScrollView>
       </View>
     </Layout>
