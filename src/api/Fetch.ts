@@ -14,7 +14,7 @@ export const get = async (url, dispatch, success) => {
     },
   })
     .then((response) => {
-        console.log("GET SUCCESS: => ", url, response.data);
+      console.log("GET SUCCESS: => ", url, response.data);
       dispatch({ type: success, payload: response.data });
     })
     .catch((err) => {
