@@ -1,25 +1,37 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { useDispatch } from "react-redux";
 import AuthLayout from "../components/AuthLayout";
 import CustomButton from "../components/CustomButton";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import CustomInput from "../components/CustomInput";
-import { useNavigation } from "@react-navigation/native";
-import { login } from "./../redux/action";
-import { useDispatch } from "react-redux";
+import { login, register } from "./../redux/action";
 const Auth = () => {
-  const [isSignUp, setIsSignUp] = React.useState(false);
+  let [isSignUp, setIsSignUp] = React.useState(false);
   const [eMail, setEMail] = React.useState("");
+  const [token, setToken] = React.useState<string | null>(null);
+
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
+
   // navigation
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
   // login
   const handleLogin = async (eMail: string, password: string) => {
-    dispatch(login(eMail, password));
+    await dispatch(login(eMail, password));
     navigation.navigate("TabStackScreen" as never);
+  };
+  // register
+  const handleRegister = async (eMail: string, password: string, passwordConfirm: string) => {
+    if (password !== passwordConfirm) {
+      alert("Passwords do not match");
+    } else {
+      await dispatch(register(eMail, password));
+      alert("Account created successfully");
+    }
   };
 
   return (
@@ -48,7 +60,14 @@ const Auth = () => {
         )}
       </View>
       <View style={styles.buttonContainer}>
-        {isSignUp && <CustomButton onPress={() => {}} title="Create your account" />}
+        {isSignUp && (
+          <CustomButton
+            onPress={() => {
+              handleRegister(eMail, password, passwordConfirm);
+            }}
+            title="Create your account"
+          />
+        )}
         {!isSignUp && (
           <CustomButton
             onPress={() => {
@@ -67,7 +86,7 @@ export default Auth;
 const styles = StyleSheet.create({
   contentContainer: {
     marginTop: hp("5%"),
-    width: wp("67%"),
+    width: wp("75%"),
     justifyContent: "center",
     alignItems: "center",
   },

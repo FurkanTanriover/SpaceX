@@ -6,17 +6,16 @@ import RecentLaunchCard from "../components/RecentLaunchCard";
 import UpcomingEventCard from "../components/UpcomingEventCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
-import { getUpcomingEvents } from "./../redux/action";
+import { getUpcomingEvents, getRecentLaunch } from "./../redux/action";
 
 const Home = () => {
   const dispatch = useDispatch();
   const [upcomingEvents, recentLaunch] = useSelector((state: any) => [state.reducer.upcomingEvents, state.reducer.recentLaunch]);
   useEffect(() => {
     getUpcomingEvents(dispatch);
-  }, [dispatch, upcomingEvents, recentLaunch]);
+    getRecentLaunch(dispatch);
+  }, []);
 
-  console.log("xy", upcomingEvents);
-  console.log("dfg", recentLaunch);
   return (
     <Layout>
       {/* upcoming events */}
@@ -37,7 +36,7 @@ const Home = () => {
       {/* recent launches */}
       <View style={styles.recentLaunchesContainer}>
         <Text className="text-2xl font-normal text-white flex mb-4  justify-start">Recent Launch</Text>
-        <ScrollView contentContainerStyle={{ rowGap: 14 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ rowGap: 14 }}>
           {recentLaunch.map((launch: any) => (
             <RecentLaunchCard
               key={launch.id}
