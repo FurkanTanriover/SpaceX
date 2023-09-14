@@ -9,11 +9,16 @@ export const setToken = (string) => ({
   payload: string,
 });
 
+export const deleteToken = () => ({
+  type: SET_TOKEN,
+  payload: null,
+});
+
 // Login işlemi
 export const login = (email: string, password: string) => async (dispatch) => {
   try {
     const token = await apiLogin(email, password);
-    await dispatch({ type: SET_TOKEN, payload: token });
+    saveToken(token);
     dispatch({ type: LOGIN_SUCCESS, payload: token });
   } catch (error) {
     dispatch({ type: LOGIN_FAILURE, payload: error.message });

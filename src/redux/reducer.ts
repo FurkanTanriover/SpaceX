@@ -1,6 +1,6 @@
 import { GET_RECENT_LAUNCH, GET_UPCOMING_EVENTS } from "../utils/constants";
-import { saveToken } from "../utils/storage";
-import { LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_SUCCESS, FETCH_FAILURE, SET_TOKEN } from "./types";
+import { deleteToken, saveToken } from "../utils/storage";
+import { LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_SUCCESS, FETCH_FAILURE, SET_TOKEN, DELETE_TOKEN } from "./types";
 
 const initialState = {
   token: null,
@@ -13,11 +13,18 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TOKEN:
+      console.log("SET_TOKEN", action.payload);
       saveToken(action.payload);
       return {
         ...state,
         token: action.payload,
       };
+      case DELETE_TOKEN:
+        deleteToken();
+        return {
+          ...state,
+          token: null,
+        };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       return { ...state, token: action.payload, error: null };
