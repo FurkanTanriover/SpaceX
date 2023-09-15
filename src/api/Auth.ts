@@ -1,7 +1,6 @@
 import ApiManager from "./ApiManager";
 import Toast from "react-native-toast-message";
 
-
 export const login = async (email, password) => {
   const showSuccesAlert = async () => {
     await Toast.show({

@@ -2,27 +2,25 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AuthLayout from "../components/AuthLayout";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { login, register } from "./../redux/action";
-import { useSelector } from "react-redux";
-import { isAuthenticating } from "./../redux/action";
 
 const Auth = () => {
   let [isSignUp, setIsSignUp] = React.useState(false);
   const [eMail, setEMail] = React.useState("");
-  const isAuthanticated = useSelector((state: any) => state.reducer.isAuthanticated);
-  console.log("isauth", isAuthanticated);
-
-  useEffect(() => {
-    isAuthenticating(dispatch);
-    isAuthanticated && navigation.navigate("TabStackScreen" as never);
-  }, [isAuthanticated]);
+  const isAuth = useSelector((state) => state.reducer.isAuth);
+  console.log("isauth", isAuth);
 
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
+
+  useEffect(() => {
+    console.log("isAuth2", isAuth);
+    isAuth && navigation.navigate("TabStackScreen" as never);
+  }, [isAuth]);
 
   // navigation
   const navigation = useNavigation();
@@ -31,7 +29,6 @@ const Auth = () => {
   // login
   const handleLogin = async (eMail: string, password: string) => {
     await dispatch(login(eMail, password));
-    navigation.navigate("TabStackScreen" as never);
   };
   // register
   const handleRegister = async (eMail: string, password: string, passwordConfirm: string) => {

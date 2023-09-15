@@ -1,6 +1,6 @@
 import { GET_RECENT_LAUNCH, GET_UPCOMING_EVENTS } from "../utils/constants";
 import { deleteToken, saveToken } from "../utils/storage";
-import { LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_SUCCESS, FETCH_FAILURE, SET_TOKEN, DELETE_TOKEN, IS_AUTHENTICATING } from "./types";
+import { DELETE_TOKEN, LOGIN_FAILURE, LOGIN_SUCCESS, REGISTER_FAILURE, REGISTER_SUCCESS, SET_IS_AUTHENTICATING, SET_TOKEN } from "./types";
 
 const initialState = {
   token: null,
@@ -8,7 +8,7 @@ const initialState = {
   data: null,
   upcomingEvents: [],
   recentLaunch: [],
-  isAuthenticating: false,
+  isAuth: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,20 +20,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         token: action.payload,
       };
-      case IS_AUTHENTICATING:
-        return {
-          ...state,
-          isAuthenticating: action.payload,
-        };
-      case DELETE_TOKEN:
-        deleteToken();
-        return {
-          ...state,
-          token: null,
-        };
+
+    case DELETE_TOKEN:
+      deleteToken();
+      return {
+        ...state,
+        token: null,
+      };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
-      return { ...state, token: action.payload, error: null };
+      return { ...state, token: action.payload, error: null, isAuth: action.payload };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
       return { ...state, token: null, error: action.payload || "Bir hata oluştu" };
@@ -47,6 +43,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         recentLaunch: action.payload,
       };
+      case SET_IS_AUTHENTICATING:
+        return {
+          ...state,
+          isAuth: action.payload,
+        };
     default:
       return state;
   }
