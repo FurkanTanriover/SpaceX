@@ -11,10 +11,10 @@ const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState(null);
 
   const dummyData = [
-    { hour: "09:30 AM", content: "Team Standup Meeting" },
+    { hour: "09:30 AM", content: "Apollo 11 Test Flight" },
     { hour: "10:00 AM", content: "" },
     { hour: "10:30 AM", content: "" },
-    { hour: "11:00 AM", content: "Project Presentation" },
+    { hour: "11:00 AM", content: "XC75 Starship Rocket Launch" },
     { hour: "11:30 AM", content: "" },
     { hour: "00:00 PM", content: "" },
     { hour: "00:30 PM", content: "" },

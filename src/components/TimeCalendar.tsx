@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 const TimeCalendar = ({ data }) => {
@@ -13,7 +13,12 @@ const TimeCalendar = ({ data }) => {
               <Text className="text-white">{item.hour}</Text>
             </View>
             <View style={item.content.length > 0 ? styles.content : styles.freeContent}>
-              <Text className="text-white">{item.content}</Text>
+              {item.content.length > 0 ? (
+                <View style={{ width: wp("5%"), height: wp("5%"), backgroundColor: "white", borderRadius: 50, marginRight: wp("5%") }}>
+                  <Image source={require("./../assets/schedule-photo.png")} style={{ width: wp("5%"), height: wp("5%") }} />
+                </View>
+              ) : null}
+              <Text className="text-white ">{item.content}</Text>
             </View>
           </View>
         );
@@ -48,6 +53,7 @@ const styles = StyleSheet.create({
     width: wp("70%"),
     marginBottom: hp("4%"),
     alignItems: "center",
+    flexDirection: "row",
   },
   freeContent: {
     padding: wp("2%"),
