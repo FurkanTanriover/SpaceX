@@ -1,6 +1,6 @@
 import { GET_RECENT_LAUNCH, GET_UPCOMING_EVENTS } from "../utils/constants";
 import { deleteToken, saveToken } from "../utils/storage";
-import { LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_SUCCESS, FETCH_FAILURE, SET_TOKEN, DELETE_TOKEN } from "./types";
+import { LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_SUCCESS, REGISTER_FAILURE, FETCH_SUCCESS, FETCH_FAILURE, SET_TOKEN, DELETE_TOKEN, IS_AUTHENTICATING } from "./types";
 
 const initialState = {
   token: null,
@@ -8,6 +8,7 @@ const initialState = {
   data: null,
   upcomingEvents: [],
   recentLaunch: [],
+  isAuthenticating: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         token: action.payload,
       };
+      case IS_AUTHENTICATING:
+        return {
+          ...state,
+          isAuthenticating: action.payload,
+        };
       case DELETE_TOKEN:
         deleteToken();
         return {

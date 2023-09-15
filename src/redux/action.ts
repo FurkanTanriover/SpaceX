@@ -2,7 +2,7 @@ import { login as apiLogin, register as apiRegister } from "../api/Auth"; // API
 import { get } from "../api/Fetch";
 import { BASE_URL, GET_RECENT_LAUNCH, GET_UPCOMING_EVENTS } from "../utils/constants";
 import { saveToken } from "../utils/storage";
-import { LOGIN_FAILURE, LOGIN_SUCCESS, REGISTER_FAILURE, REGISTER_SUCCESS, SET_TOKEN } from "./types";
+import { IS_AUTHENTICATING, LOGIN_FAILURE, LOGIN_SUCCESS, REGISTER_FAILURE, REGISTER_SUCCESS, SET_TOKEN } from "./types";
 
 export const setToken = (string) => ({
   type: SET_TOKEN,
@@ -14,11 +14,17 @@ export const deleteToken = () => ({
   payload: null,
 });
 
+export const isAuthenticating = (bool) => ({
+  type: IS_AUTHENTICATING,
+  payload: bool,
+})
+
 // Login işlemi
 export const login = (email: string, password: string) => async (dispatch) => {
   try {
     const token = await apiLogin(email, password);
     saveToken(token);
+    dispatch({type: IS_AUTHENTICATING, payload: true})
     dispatch({ type: LOGIN_SUCCESS, payload: token });
   } catch (error) {
     dispatch({ type: LOGIN_FAILURE, payload: error.message });

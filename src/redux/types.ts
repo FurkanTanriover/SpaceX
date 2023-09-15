@@ -6,3 +6,4 @@ export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 export const SET_TOKEN = "SET_TOKEN";
 export const DELETE_TOKEN = "DELETE_TOKEN";
+export const IS_AUTHENTICATING = "IS_AUTHENTICATING";
