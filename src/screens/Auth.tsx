@@ -1,5 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,18 +7,17 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { login, register } from "./../redux/action";
 import Toast from "react-native-toast-message";
+import { useNavigation } from "@react-navigation/native";
 
 const Auth = () => {
-  let [isSignUp, setIsSignUp] = React.useState(false);
-  const [eMail, setEMail] = React.useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [eMail, setEMail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const isAuth = useSelector((state) => state.reducer.isAuth);
-  console.log("isauth", isAuth);
-
-  const [password, setPassword] = React.useState("");
-  const [passwordConfirm, setPasswordConfirm] = React.useState("");
+  const isRegisterSuccess = useSelector((state) => state.reducer.isRegisterSuccess);
 
   useEffect(() => {
-    console.log("isAuth2", isAuth);
     isAuth && navigation.navigate("TabStackScreen" as never);
   }, [isAuth]);
 
@@ -34,18 +32,38 @@ const Auth = () => {
       text1: "Password do not match",
     });
   };
-  // login
-  const handleLogin = async (eMail: string, password: string) => {
+
+  const showInvalidEmailAlert = async () => {
+    await Toast.show({
+      type: "error",
+      text1: "Invalid email address",
+    });
+  };
+
+  const handleLogin = async () => {
     await dispatch(login(eMail, password));
   };
-  // register
-  const handleRegister = async (eMail: string, password: string, passwordConfirm: string) => {
+
+  const handleRegister = async () => {
     if (password !== passwordConfirm) {
       showPasswordDoNotMatchAlert();
+    } else if (!isValidEmail(eMail)) {
+      showInvalidEmailAlert();
     } else {
       await dispatch(register(eMail, password));
-      
+      if (isRegisterSuccess) {
+        setIsSignUp(false);
+        setEMail("");
+        setPassword("");
+        setPasswordConfirm("");
+      }
     }
+  };
+
+  // E-posta doğrulama işlemi
+  const isValidEmail = (email) => {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
+    return emailRegex.test(email);
   };
 
   return (
@@ -74,21 +92,10 @@ const Auth = () => {
         )}
       </View>
       <View style={styles.buttonContainer}>
-        {isSignUp && (
-          <CustomButton
-            onPress={() => {
-              handleRegister(eMail, password, passwordConfirm);
-            }}
-            title="Create your account"
-          />
-        )}
-        {!isSignUp && (
-          <CustomButton
-            onPress={() => {
-              handleLogin(eMail, password);
-            }}
-            title="Login"
-          />
+        {isSignUp ? (
+          <CustomButton onPress={handleRegister} title="Create your account" />
+        ) : (
+          <CustomButton onPress={handleLogin} title="Login" />
         )}
       </View>
     </AuthLayout>
