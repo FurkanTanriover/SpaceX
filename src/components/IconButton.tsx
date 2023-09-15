@@ -13,7 +13,6 @@ const IconButton = ({ name, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 50,
-    padding: 10,
   },
 });
 

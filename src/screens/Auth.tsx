@@ -7,6 +7,7 @@ import AuthLayout from "../components/AuthLayout";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { login, register } from "./../redux/action";
+import Toast from "react-native-toast-message";
 
 const Auth = () => {
   let [isSignUp, setIsSignUp] = React.useState(false);
@@ -26,6 +27,13 @@ const Auth = () => {
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
+
+  const showPasswordDoNotMatchAlert = async () => {
+    await Toast.show({
+      type: "error",
+      text1: "Password do not match",
+    });
+  };
   // login
   const handleLogin = async (eMail: string, password: string) => {
     await dispatch(login(eMail, password));
@@ -33,10 +41,10 @@ const Auth = () => {
   // register
   const handleRegister = async (eMail: string, password: string, passwordConfirm: string) => {
     if (password !== passwordConfirm) {
-      alert("Passwords do not match");
+      showPasswordDoNotMatchAlert();
     } else {
       await dispatch(register(eMail, password));
-      alert("Account created successfully");
+      
     }
   };
 
@@ -55,8 +63,8 @@ const Auth = () => {
         {isSignUp ? (
           <View className="space-y-4" style={styles.inputContainer}>
             <CustomInput placeholder="E-Mail" value={eMail} onChangeText={setEMail} />
-            <CustomInput placeholder="Password" value={password} onChangeText={setPassword} />
-            <CustomInput placeholder="Password confirm" value={passwordConfirm} onChangeText={setPasswordConfirm} />
+            <CustomInput isPassword placeholder="Password" value={password} onChangeText={setPassword} />
+            <CustomInput isPassword placeholder="Password confirm" value={passwordConfirm} onChangeText={setPasswordConfirm} />
           </View>
         ) : (
           <View className="space-y-4" style={styles.inputContainer}>

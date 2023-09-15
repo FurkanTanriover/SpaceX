@@ -28,8 +28,9 @@ const reducer = (state = initialState, action) => {
         token: null,
       };
     case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
       return { ...state, token: action.payload, error: null, isAuth: action.payload };
+    case REGISTER_SUCCESS:
+      return { ...state, token: action.payload, error: null };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
       return { ...state, token: null, error: action.payload || "Bir hata oluştu" };
@@ -43,11 +44,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         recentLaunch: action.payload,
       };
-      case SET_IS_AUTHENTICATING:
-        return {
-          ...state,
-          isAuth: action.payload,
-        };
+    case SET_IS_AUTHENTICATING:
+      return {
+        ...state,
+        isAuth: action.payload,
+      };
     default:
       return state;
   }

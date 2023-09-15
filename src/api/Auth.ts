@@ -2,17 +2,17 @@ import ApiManager from "./ApiManager";
 import Toast from "react-native-toast-message";
 
 export const login = async (email, password) => {
-  const showSuccesAlert = async () => {
+  const showSuccessLoginAlert = async () => {
     await Toast.show({
       type: "success",
-      text1: "Giriş başarılı",
+      text1: "Giriş işlemi başarılı",
     });
   };
 
-  const showErrorAlert = () => {
+  const showErrorLoginAlert = () => {
     Toast.show({
       type: "error",
-      text1: "Şifre veya email yanlış",
+      text1: "Login ",
     });
   };
 
@@ -28,15 +28,29 @@ export const login = async (email, password) => {
       },
     });
     console.log("response", response);
-    showSuccesAlert();
+    showSuccessLoginAlert();
     return response.data.token;
   } catch (error) {
-    showErrorAlert();
+    showErrorLoginAlert();
     console.log("error", error);
   }
 };
 
 export const register = async (email, password) => {
+  const showSuccessRegisterAlert = async () => {
+    await Toast.show({
+      type: "success",
+      text1: "Account created successfully",
+    });
+  };
+
+  const showErrorRegisterAlert = () => {
+    Toast.show({
+      type: "error",
+      text1: "Account creation failed",
+    });
+  };
+
   try {
     const response = await ApiManager("/auth/register", {
       method: "POST",
@@ -48,8 +62,10 @@ export const register = async (email, password) => {
         password,
       },
     });
+    showSuccessRegisterAlert();
     return response.data.token;
   } catch (error) {
+    showErrorRegisterAlert();
     console.log(error);
   }
 };
