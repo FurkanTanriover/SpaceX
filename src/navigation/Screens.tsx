@@ -1,15 +1,14 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
+import { Image } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Auth from "../screens/Auth";
 import Home from "../screens/Home";
-import { Image } from "react-native";
-import Schedule from "../screens/Schedule";
 import Launch from "../screens/Launch";
+import Schedule from "../screens/Schedule";
 import Settings from "../screens/Settings";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { loadToken } from "../utils/storage";
-import { useSelector } from "react-redux";
 
 type RootStackParamList = {
   Auth: undefined;

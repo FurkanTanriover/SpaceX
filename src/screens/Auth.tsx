@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { useDispatch } from "react-redux";
@@ -7,10 +7,19 @@ import AuthLayout from "../components/AuthLayout";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { login, register } from "./../redux/action";
+import { useSelector } from "react-redux";
+import { isAuthenticating } from "./../redux/action";
+
 const Auth = () => {
   let [isSignUp, setIsSignUp] = React.useState(false);
   const [eMail, setEMail] = React.useState("");
-  const [token, setToken] = React.useState<string | null>(null);
+  const isAuthanticated = useSelector((state: any) => state.reducer.isAuthanticated);
+  console.log("isauth", isAuthanticated);
+
+  useEffect(() => {
+    isAuthenticating(dispatch);
+    isAuthanticated && navigation.navigate("TabStackScreen" as never);
+  }, [isAuthanticated]);
 
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
@@ -55,7 +64,7 @@ const Auth = () => {
         ) : (
           <View className="space-y-4" style={styles.inputContainer}>
             <CustomInput placeholder="E-Mail" value={eMail} onChangeText={setEMail} />
-            <CustomInput placeholder="Password" value={password} onChangeText={setPassword} />
+            <CustomInput isPassword placeholder="Password" value={password} onChangeText={setPassword} />
           </View>
         )}
       </View>

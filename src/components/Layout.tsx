@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </View>
         <View>
           <IconButton
-            name="logout"
+            name="log-out"
             onPress={() => {
               handleLogout();
             }}

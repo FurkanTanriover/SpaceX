@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import RecentLaunchCard from "../components/RecentLaunchCard";
 import UpcomingEventCard from "../components/UpcomingEventCard";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch, useSelector } from "react-redux";
-import { getUpcomingEvents, getRecentLaunch } from "./../redux/action";
+import { getRecentLaunch, getUpcomingEvents } from "./../redux/action";
 
 const Home = () => {
   const dispatch = useDispatch();

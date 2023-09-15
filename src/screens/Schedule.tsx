@@ -9,6 +9,7 @@ import TimeCalendar from "../components/TimeCalendar";
 const Schedule = () => {
   const dayData = fakeDateData();
   const [selectedDay, setSelectedDay] = useState(null);
+
   const dummyData = [
     { hour: "09:30 AM", content: "Team Standup Meeting" },
     { hour: "10:00 AM", content: "" },
@@ -23,7 +24,7 @@ const Schedule = () => {
     <Layout>
       {/* calendar header */}
       <View style={styles.calendarHeader}>
-        <Text className="text-2xl font-bold text-white flex  justify-start">July 20</Text>
+        <Text className="text-2xl font-bold text-white flex  justify-start">July {selectedDay ? selectedDay : "-"}</Text>
         <Text className="text-[16px]  text-white/50 flex  justify-start">2 events today</Text>
       </View>
       {/* upcoming event day container */}

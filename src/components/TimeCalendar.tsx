@@ -12,7 +12,7 @@ const TimeCalendar = ({ data }) => {
             <View style={styles.hours}>
               <Text className="text-white">{item.hour}</Text>
             </View>
-            <View style={item.content.length > 0 ? styles.content : ""}>
+            <View style={item.content.length > 0 ? styles.content : styles.freeContent}>
               <Text className="text-white">{item.content}</Text>
             </View>
           </View>
@@ -48,5 +48,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: hp("4%"),
     alignItems: "center",
+  },
+  freeContent: {
+    padding: wp("2%"),
+    marginBottom: hp("4%"),
   },
 });
