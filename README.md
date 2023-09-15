@@ -18,8 +18,8 @@ SpaceX Explorer, SpaceX'in roket fırlatmalarını ve uzay görevlerininin  deta
 - Axios: HTTP istekleri yapmak için kullanılan JavaScript kütüphanesi.
 - Formik: Form yönetimi için kullanılan JavaScript kütüphanesi.
 - Yup: Şema doğrulama için kullanılan JavaScript kütüphanesi.
-- Async Storage: Verileri depolamak için kullanılan React Native modülü.
-- Expo Toast Message: Toast mesajlarını göstermek için kullanılan Expo bileşeni.
+- React Native Async Storage: Verileri depolamak için kullanılan React Native modülü.
+- React Native Toast Message: Toast mesajlarını göstermek için kullanılan Expo bileşeni.
 
 
 ## Kurulum
