@@ -5,14 +5,14 @@ export const login = async (email, password) => {
   const showSuccessLoginAlert = async () => {
     await Toast.show({
       type: "success",
-      text1: "Giriş işlemi başarılı",
+      text1: "Successfully logged in",
     });
   };
 
   const showErrorLoginAlert = () => {
     Toast.show({
       type: "error",
-      text1: "Login ",
+      text1: "Login failed ",
     });
   };
 

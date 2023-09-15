@@ -19,6 +19,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ placeholder, style, value, on
   return (
     <View style={[styles.container, style]}>
       <TextInput
+        autoCapitalize="none"
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -28,9 +29,12 @@ const CustomInput: React.FC<CustomInputProps> = ({ placeholder, style, value, on
       />
       {isPassword && (
         <View>
-          <IconButton name= {isSecure?"eye":"eye-off"} onPress={() => {
-            toggleSecureTextEntry();
-          }} />
+          <IconButton
+            name={isSecure ? "eye" : "eye-off"}
+            onPress={() => {
+              toggleSecureTextEntry();
+            }}
+          />
         </View>
       )}
     </View>

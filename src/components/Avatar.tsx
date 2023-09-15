@@ -19,7 +19,7 @@ const CustomAvatar: React.FC<CustomAvatarProps> = ({ source }) => {
 const styles = StyleSheet.create({
   avatar: {
     shadowColor: "#ffffff", // Gölge rengi
-    backgroundColor:"#36445B",
+    backgroundColor: "#36445B",
     shadowOffset: {
       width: 0,
       height: 0,
